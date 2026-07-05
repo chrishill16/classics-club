@@ -3,6 +3,7 @@ import { getCover } from "./utils/covers";
 import { createRoot } from 'react-dom/client';
 import { Search, Film, BookOpen, Star, Download, Upload, Shuffle, CheckCircle2, Library, Heart, Sparkles, Users, BarChart3 } from 'lucide-react';
 import { catalogue } from './catalogue.js';
+import HeroRecommendation from "./components/HeroRecommendation.jsx";
 import './styles.css';
 
 const people = ['Chris', 'Brooke'];
@@ -91,8 +92,14 @@ function App(){
     </aside>
 
     <section className="browse-panel">
-      <div className="section-title"><Sparkles /><div><h2>What are you in the mood for?</h2><p>Filter by type, mood, difficulty or search directly.</p></div></div>
-      <div className="search"><Search size={18}/><input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search titles, creators, moods..." /></div>
+{/* <HeroRecommendation item={selected} /> */}
+  <div className="section-title">
+    <Sparkles />
+    <div>
+      <h2>What are you in the mood for?</h2>
+      <p>Filter by type, mood, difficulty or search directly.</p>
+    </div>
+  </div>      <div className="search"><Search size={18}/><input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search titles, creators, moods..." /></div>
       <div className="filters">
         <select value={mood} onChange={e => setMood(e.target.value)}><option>All</option>{moods.map(m => <option key={m}>{m}</option>)}</select>
         <select value={difficulty} onChange={e => setDifficulty(e.target.value)}><option>All</option><option>Easy</option><option>Medium</option><option>Challenging</option></select>
@@ -103,7 +110,7 @@ function App(){
         <div className="cover">
   <img
     src={getCover(item)}
-    alt={`${item.title} cover`}
+    alt=""
     onError={(e) => {
       e.currentTarget.hidden = true;
       e.currentTarget.nextElementSibling.hidden = false;
