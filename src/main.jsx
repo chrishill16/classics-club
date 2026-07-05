@@ -1,5 +1,5 @@
-
 import React, { useEffect, useMemo, useState } from 'react';
+import { getCover } from "./utils/covers";
 import { createRoot } from 'react-dom/client';
 import { Search, Film, BookOpen, Star, Download, Upload, Shuffle, CheckCircle2, Library, Heart, Sparkles, Users, BarChart3 } from 'lucide-react';
 import { catalogue } from './catalogue.js';
@@ -100,7 +100,19 @@ function App(){
       <div className="count">Showing {filtered.length} of {catalogue.length}</div>
       <div className="cards">
         {filtered.map(item => <article key={item.id} onClick={() => setSelectedId(item.id)} className={'work-card ' + (selectedId === item.id ? 'selected' : '')}>
-          <div className="cover"><span>{item.type === 'Film' ? '🎬' : '📚'}</span></div>
+        <div className="cover">
+  <img
+    src={getCover(item)}
+    alt={`${item.title} cover`}
+    onError={(e) => {
+      e.currentTarget.hidden = true;
+      e.currentTarget.nextElementSibling.hidden = false;
+    }}
+  />
+
+  <span hidden>{item.type === "Film" ? "🎬" : "📚"}
+  </span>
+</div>
           <div className="work-copy"><div className="eyebrow">{item.type} · {item.year}</div><h3>{item.title}</h3><p>{item.creator}</p><div className="pills">{item.mood.slice(0,3).map(m => <span key={m}>{m}</span>)}</div></div>
           <div className="card-status">{people.every(p => progress[item.id]?.[p]?.status === 'Finished') ? <CheckCircle2 /> : null}</div>
         </article>)}
